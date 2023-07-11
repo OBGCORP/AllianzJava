@@ -6,7 +6,7 @@ public class BankAccount {
     private String bankName;
     private String ibanNo;
     private String companyName;
-    private BigDecimal account;
+    private BigDecimal amount;
 
     public String getBankName() {
         return bankName;
@@ -32,11 +32,11 @@ public class BankAccount {
         this.companyName = companyName;
     }
 
-    public BigDecimal getAccount() {
-        return account;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setAccount(BigDecimal account) {
-        this.account = account;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }
