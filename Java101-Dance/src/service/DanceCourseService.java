@@ -13,4 +13,18 @@ public class DanceCourseService {
         danceCourse.setTaxOffice(taxOffice);
         return danceCourse;
     }
+
+    public DanceCourse createDanceCourse() {
+        DanceCourse danceCourse = new DanceCourse();
+        return danceCourse;
+    }
+
+    public DanceCourse createDanceCourse(String name) {
+        return new DanceCourse(name);
+    }
+
+    public DanceCourse createDanceCourse(String name, String taxNumber, String taxOffice) {
+        return new DanceCourse(name, taxNumber, taxOffice);
+    }
+
 }

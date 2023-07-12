@@ -12,6 +12,19 @@ public class DanceCourse {
     private List<PaymentMovement> paymentMovementList;
     private List<Instructor> instructorList;
 
+    public DanceCourse() {
+    }
+
+    public DanceCourse(String name) {
+        this.name = name;
+    }
+
+    public DanceCourse(String name, String taxNumber, String taxOffice) {
+        this.name = name;
+        this.taxNumber = taxNumber;
+        this.taxOffice = taxOffice;
+    }
+
     public String getName() {
         return name;
     }
