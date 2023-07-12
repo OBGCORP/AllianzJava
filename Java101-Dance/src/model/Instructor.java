@@ -4,11 +4,16 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Instructor {
+
     private String name;
     private List<Branch> branchList;
+
     private int age;
+
     private Sex sex;
+
     private BigDecimal salary;
+
 
     public String getName() {
         return name;

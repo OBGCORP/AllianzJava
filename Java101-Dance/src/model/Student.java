@@ -4,13 +4,20 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Student {
+
     private String name;
     private int age;
+
     private Sex sex;
+
     private boolean isPaid = Boolean.FALSE;
+
     private BigDecimal contractAmount;
+
     private Date startDate;
+
     private Date endDate;
+
 
     public String getName() {
         return name;

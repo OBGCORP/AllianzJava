@@ -39,4 +39,14 @@ public class BankAccount {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "bankName='" + bankName + '\'' +
+                ", ibanNo='" + ibanNo + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

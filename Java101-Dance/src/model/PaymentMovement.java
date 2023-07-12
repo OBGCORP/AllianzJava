@@ -3,10 +3,12 @@ package model;
 import java.math.BigDecimal;
 
 public class PaymentMovement {
+
     private BankAccount bankAccount;
     private String description;
     private MovementType movementType;
     private BigDecimal amount;
+
 
     public BankAccount getBankAccount() {
         return bankAccount;

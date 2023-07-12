@@ -3,12 +3,19 @@ package model;
 import java.util.List;
 
 public class Lecture {
+
     private String name;
+
     private Instructor instructor;
+
     private Branch branch;
+
     private int capacity;
+
     private List<LectureScheduleTime> lectureScheduleTimeList;
+
     private List<Student> studentList;
+
 
     public String getName() {
         return name;
