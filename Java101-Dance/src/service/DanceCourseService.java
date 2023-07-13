@@ -1,8 +1,6 @@
 package service;
 
-import model.BankAccount;
-import model.DanceCourse;
-import model.Instructor;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,25 +72,49 @@ public class DanceCourseService {
     public void addInstructorToDanceCourse(DanceCourse danceCourse, Instructor instructor) {
 
         BankAccountService bankAccountService = new BankAccountService();
+        PaymentMovementService paymentMovementService = new PaymentMovementService();
 
-        if(danceCourse.getBankAccountList()!=null) {
-            if (danceCourse.getInstructorList()!= null) {
-                BankAccount bankAccount = bankAccountService.getBankAccountWithEnoughMoney(danceCourse, instructor.getSalary());
+        if (danceCourse.getBankAccountList() != null) {
 
-                if(bankAccount != null) {
+            BankAccount bankAccount = bankAccountService.getBankAccountWithEnoughMoney(danceCourse, instructor.getSalary());
+
+            if (bankAccount != null) {
+
+                bankAccount.setAmount(bankAccount.getAmount().subtract(instructor.getSalary()));
+                PaymentMovement paymentMovement = paymentMovementService.createPaymentMovement(bankAccount, instructor.getName() + " maas odemesi", MovementType.OUTCOME, instructor.getSalary());
+
+                addPaymentMovementToDanceCourse(danceCourse, paymentMovement);
+
+                if (danceCourse.getInstructorList() != null) {
+
+                    danceCourse.getInstructorList().add(instructor);
 
                 } else {
-                    System.err.println("Yeterli bakiyesi olan banka hesabi yok.");
+
+                    danceCourse.setInstructorList(List.of(instructor));
+
                 }
 
             } else {
 
+                System.err.println("Yeterli bakiyesi olan banka hesabi yok.");
+
             }
 
         } else {
+
             System.err.println("Banka hesabi olmadigi icin ogretmen alinamaz.");
+
         }
 
+    }
+
+    public void addPaymentMovementToDanceCourse(DanceCourse danceCourse, PaymentMovement paymentMovement) {
+        if (danceCourse.getPaymentMovementList() != null) {
+            danceCourse.getPaymentMovementList().add(paymentMovement);
+        } else {
+            danceCourse.setPaymentMovementList(List.of(paymentMovement));
+        }
     }
 
 }

@@ -1,10 +1,5 @@
-import model.BankAccount;
-import model.Branch;
-import model.DanceCourse;
-import service.BankAccountService;
-import service.BranchService;
-import service.DanceCourseService;
-import service.InitialDataService;
+import model.*;
+import service.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -19,6 +14,7 @@ public class Main {
         DanceCourseService danceCourseService = new DanceCourseService();
         BankAccountService bankAccountService = new BankAccountService();
         BranchService branchService = new BranchService();
+        InstructorService instructorService = new InstructorService();
 
         List<Branch> branchList = InitialDataService.loadInitialDataForBranch();
 
@@ -48,6 +44,10 @@ public class Main {
 
         System.out.println(branchList);
 
+        Instructor instructor = instructorService.createInstructor("Ahmet Demir", 28, Sex.MALE, new BigDecimal(12000));
+        danceCourseService.addInstructorToDanceCourse(danceCourse, instructor);
+
+        System.out.println(danceCourse);
 
     }
 
