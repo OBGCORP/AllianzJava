@@ -18,7 +18,7 @@ public class LectureService {
         lecture.setInstructor(instructor);
     }
 
-    public void scheduleTimeToLecture(Lecture lecture, Set<LectureScheduleTime> lectureScheduleTimeSet) {
+    public void addScheduleTimeToLecture(Lecture lecture, Set<LectureScheduleTime> lectureScheduleTimeSet) {
         if (lecture.getLectureScheduleTimeSet()!=null) {
             lecture.getLectureScheduleTimeSet().addAll(lectureScheduleTimeSet);
         } else {

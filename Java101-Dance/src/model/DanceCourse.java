@@ -21,6 +21,7 @@ public class DanceCourse {
     private List<Instructor> instructorList;
 
     private List<Student> studentList;
+    private List<Lecture> lectureList;
 
     //DanceCourse course = new DansCourse();
 
@@ -112,6 +113,13 @@ public class DanceCourse {
         this.studentList = studentList;
     }
 
+    public List<Lecture> getLectureList() {
+        return lectureList;
+    }
+
+    public void setLectureList(List<Lecture> lectureList) {
+        this.lectureList = lectureList;
+    }
 
     @Override
     public String toString() {
@@ -125,6 +133,7 @@ public class DanceCourse {
                 ", paymentMovementList=" + paymentMovementList +
                 ", instructorList=" + instructorList +
                 ", studentList=" + studentList +
+                ", lectureList=" + lectureList +
                 '}';
     }
 }

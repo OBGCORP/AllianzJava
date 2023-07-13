@@ -15,6 +15,8 @@ public class Main {
         BankAccountService bankAccountService = new BankAccountService();
         BranchService branchService = new BranchService();
         InstructorService instructorService = new InstructorService();
+        LectureService lectureService = new LectureService();
+        LectureScheduleTimeService lectureScheduleTimeService = new LectureScheduleTimeService();
 
         List<Branch> branchList = InitialDataService.loadInitialDataForBranch();
 
@@ -47,6 +49,16 @@ public class Main {
         Instructor instructor = instructorService.createInstructor("Ahmet Demir", 28, Sex.MALE, new BigDecimal(12000));
         danceCourseService.addInstructorToDanceCourse(danceCourse, instructor);
 
+        System.out.println(danceCourse);
+
+        Lecture lecture = lectureService.createLecture("Bachata", branchList.get(0), 10);
+
+        LectureScheduleTime lectureScheduleTime = lectureScheduleTimeService.createLectureScheduleTime(Day.MONDAY, "12:00-14:00");
+        Set<LectureScheduleTime> lectureScheduleTimeSet = new HashSet<>();
+        lectureScheduleTimeSet.add(lectureScheduleTime);
+
+        lectureService.addScheduleTimeToLecture(lecture, lectureScheduleTimeSet);
+        danceCourseService.addLectureToDanceCourse(danceCourse, lecture);
         System.out.println(danceCourse);
 
     }

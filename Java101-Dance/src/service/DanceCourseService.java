@@ -117,4 +117,12 @@ public class DanceCourseService {
         }
     }
 
+    public void addLectureToDanceCourse(DanceCourse danceCourse, Lecture lecture) {
+        if (danceCourse.getLectureList()!=null) {
+            danceCourse.getLectureList().add(lecture);
+        } else {
+            danceCourse.setLectureList(List.of(lecture));
+        }
+    }
+
 }
