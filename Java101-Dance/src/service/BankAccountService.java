@@ -1,6 +1,7 @@
 package service;
 
 import model.BankAccount;
+import model.DanceCourse;
 
 import java.math.BigDecimal;
 
@@ -15,5 +16,13 @@ public class BankAccountService {
         return bankAccount;
     }
 
+    public BankAccount getBankAccountWithEnoughMoney(DanceCourse danceCourse, BigDecimal amount) {
+        for (BankAccount bankAccount: danceCourse.getBankAccountList()) {
+            if (amount.compareTo(bankAccount.getAmount()) < 0) {
+                return bankAccount;
+            }
+        }
+        return null;
+    }
 
 }
