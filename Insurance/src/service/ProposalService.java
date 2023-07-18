@@ -6,7 +6,6 @@ import model.Vehicle;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class ProposalService {
     public Proposal createProposal(InsuranceCompany insuranceCompany, Vehicle vehicle, BigDecimal offerPrice, LocalDate startDate, LocalDate endDate, LocalDate expireDate, BigDecimal discountPrice) {
@@ -19,5 +18,13 @@ public class ProposalService {
         proposal.setExpireDate(expireDate);
         proposal.setDiscountPrice(discountPrice);
         return proposal;
+    }
+
+    public BigDecimal calculateDiscountedPrice(Proposal proposal) {
+        if (proposal.getDiscountPrice()!= null){
+            return proposal.getOfferPrice().subtract(proposal.getDiscountPrice());
+        } else {
+            return proposal.getOfferPrice();
+        }
     }
 }
