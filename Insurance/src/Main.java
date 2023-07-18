@@ -61,5 +61,6 @@ public class Main {
                 new BigDecimal(1000), startDate, endDate, expireDate, new BigDecimal(100));
 
         insuranceRequestService.addProposalToInsuranceRequest(insuranceRequest, proposal);
+        customerService.acceptProposal(customer, proposal, insuranceRequest, agency);
     }
 }

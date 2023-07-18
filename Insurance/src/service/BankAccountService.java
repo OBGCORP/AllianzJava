@@ -18,7 +18,6 @@ public class BankAccountService {
 
 
     public BankAccount getBankAccountWithEnoughMoney(Customer bankAccountOwner, BigDecimal amount) {
-
         for (BankAccount bankAccount : bankAccountOwner.getBankAccountList()) {
             if (bankAccount.getAmount().compareTo(amount) >= 0) {
                 return bankAccount;
@@ -38,7 +37,6 @@ public class BankAccountService {
     }
 
     public BankAccount getBankAccountWithEnoughMoney(InsuranceCompany bankAccountOwner, BigDecimal amount) {
-
         for (BankAccount bankAccount : bankAccountOwner.getBankAccountList()) {
             if (bankAccount.getAmount().compareTo(amount) >= 0) {
                 return bankAccount;
@@ -81,6 +79,11 @@ public class BankAccountService {
             }
         }
         return bankAccountWithMinMoney;
+    }
+
+    public void makePayment(BankAccount receiverAccount, BankAccount senderAccount, BigDecimal amount) {
+        receiverAccount.setAmount(receiverAccount.getAmount().add(amount));
+        senderAccount.setAmount(senderAccount.getAmount().subtract(amount));
     }
 
 }

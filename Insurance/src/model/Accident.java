@@ -9,13 +9,6 @@ public class Accident {
     private BigDecimal damagePrice;
     private int failureRate;
 
-    public Accident(Date accidentDate, String description, BigDecimal damagePrice, int failureRate) {
-        this.accidentDate = accidentDate;
-        this.description = description;
-        this.damagePrice = damagePrice;
-        this.failureRate = failureRate;
-    }
-
     public Accident() {
     }
 
@@ -49,5 +42,15 @@ public class Accident {
 
     public void setFailureRate(int failureRate) {
         this.failureRate = failureRate;
+    }
+
+    @Override
+    public String toString() {
+        return "Accident{" +
+                "accidentDate=" + accidentDate +
+                ", description='" + description + '\'' +
+                ", damagePrice=" + damagePrice +
+                ", failureRate=" + failureRate +
+                '}';
     }
 }

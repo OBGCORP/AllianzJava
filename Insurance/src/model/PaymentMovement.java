@@ -3,7 +3,6 @@ package model;
 import java.math.BigDecimal;
 
 public class PaymentMovement {
-
     private BankAccount bankAccount;
     private String description;
     private MovementType movementType;
@@ -42,5 +41,13 @@ public class PaymentMovement {
         this.amount = amount;
     }
 
-
+    @Override
+    public String toString() {
+        return "PaymentMovement{" +
+                "bankAccount=" + bankAccount +
+                ", description='" + description + '\'' +
+                ", movementType=" + movementType +
+                ", amount=" + amount +
+                '}';
+    }
 }

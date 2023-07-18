@@ -1,9 +1,6 @@
 package service;
 
-import model.Agency;
-import model.BankAccount;
-import model.Customer;
-import model.InsuranceCompany;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -42,6 +39,16 @@ public class AgencyService {
         } else {
             ArrayList<Customer> customerArrayList = new ArrayList<>();
             agency.setCustomerList(customerArrayList);
+        }
+    }
+
+    public void addPaymentMovementToAgency(Agency agency, PaymentMovement paymentMovement) {
+        if (agency.getPaymentMovementList() != null) {
+            agency.getPaymentMovementList().add(paymentMovement);
+        } else {
+            ArrayList<PaymentMovement> paymentMovementList = new ArrayList<>();
+            paymentMovementList.add(paymentMovement);
+            agency.setPaymentMovementList(paymentMovementList);
         }
     }
 
