@@ -62,5 +62,7 @@ public class CustomerService {
         }
     }
 
+    public void acceptProposal(Customer customer){
 
+    }
 }

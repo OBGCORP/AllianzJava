@@ -53,8 +53,13 @@ public class Main {
         customerService.addInsuranceRequestToCustomer(customer, insuranceRequest);
         LocalDate startDate = LocalDate.of(2010, Month.APRIL, 15);
         LocalDate endDate = LocalDate.of(2011, Month.APRIL, 15);
+        LocalDate expireDate = startDate.plusDays(3);
 
+        ProposalService proposalService = new ProposalService();
 
+        Proposal proposal = proposalService.createProposal(insuranceCompany, vehicle,
+                new BigDecimal(1000), startDate, endDate, expireDate, new BigDecimal(100));
 
+        insuranceRequestService.addProposalToInsuranceRequest(insuranceRequest, proposal);
     }
 }
