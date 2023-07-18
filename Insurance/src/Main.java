@@ -2,6 +2,9 @@ import model.*;
 import service.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Date;
 
 public class Main {
 
@@ -19,7 +22,7 @@ public class Main {
 
         InsuranceCompanyService insuranceCompanyService = new InsuranceCompanyService();
         InsuranceCompany insuranceCompany = insuranceCompanyService.createInsuranceCompany("Allianz", "727384849",
-                "Ankara", "Ankara/ Cankaya", new BigDecimal(8));
+                "8234449", "Ankara/ Cankaya", new BigDecimal(8));
 
         InsuranceService insuranceService = new InsuranceService();
         Insurance insurance = insuranceService.createInsurance("compulsory traffic insurance", InsuranceType.COMPULSORY_TRAFFIC_INSURANCE);
@@ -43,5 +46,15 @@ public class Main {
 
         customerService.addVehicleToCustomer(customer, vehicle);
         System.out.println(customer);
+
+        InsuranceRequestService insuranceRequestService = new InsuranceRequestService();
+        InsuranceRequest insuranceRequest = insuranceRequestService.createInsuranceRequest(vehicle);
+
+        customerService.addInsuranceRequestToCustomer(customer, insuranceRequest);
+        LocalDate startDate = LocalDate.of(2010, Month.APRIL, 15);
+        LocalDate endDate = LocalDate.of(2011, Month.APRIL, 15);
+
+
+
     }
 }
