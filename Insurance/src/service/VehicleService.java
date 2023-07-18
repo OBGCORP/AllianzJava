@@ -25,6 +25,5 @@ public class VehicleService {
             accidentList.add(accident);
             vehicle.setAccidentList(accidentList);
         }
-
     }
 }

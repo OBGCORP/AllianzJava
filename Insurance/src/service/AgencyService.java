@@ -2,6 +2,7 @@ package service;
 
 import model.Agency;
 import model.BankAccount;
+import model.Customer;
 import model.InsuranceCompany;
 
 import java.util.ArrayList;
@@ -33,7 +34,15 @@ public class AgencyService {
             insuranceCompanyList.add(insuranceCompany);
             agency.setInsuranceCompanyList(insuranceCompanyList);
         }
+    }
 
+    public void addCustomerToAgency(Agency agency, Customer customer) {
+        if (agency.getCustomerList() != null) {
+            agency.getCustomerList().add(customer);
+        } else {
+            ArrayList<Customer> customerArrayList = new ArrayList<>();
+            agency.setCustomerList(customerArrayList);
+        }
     }
 
 }

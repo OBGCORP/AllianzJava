@@ -1,6 +1,8 @@
 package service;
 
-import model.*;
+import model.InsuranceCompany;
+import model.Policy;
+import model.Vehicle;
 
 import java.math.BigDecimal;
 import java.util.Date;
