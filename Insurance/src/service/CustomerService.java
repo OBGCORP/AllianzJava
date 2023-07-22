@@ -118,14 +118,14 @@ public class CustomerService {
 
                     if (customerBankAccount != null && proposal.getCompany().getBankAccountList() != null && agency.getBankAccountList() != null) {
                         bankAccountService.makePayment(companyBankAccount, customerBankAccount, discountedPrice);
-                        PaymentMovement customerPaymentMovement = paymentMovementService.createPaymentMovement(customerBankAccount, "Traffic Insurance Payment", MovementType.OUTCOME, discountedPrice);
+                        PaymentMovement customerPaymentMovement = paymentMovementService.createPaymentMovement(customerBankAccount, "Traffic Insurance Payment: ", MovementType.OUTCOME, discountedPrice);
                         addPaymentMovementToCustomer(customer, customerPaymentMovement);
-                        PaymentMovement companyPaymentMovement = paymentMovementService.createPaymentMovement(companyBankAccount, "Insurance income", MovementType.INCOME, discountedPrice);
+                        PaymentMovement companyPaymentMovement = paymentMovementService.createPaymentMovement(companyBankAccount, "Insurance income: ", MovementType.INCOME, discountedPrice);
                         companyService.addPaymentMovementToInsuranceCompany(proposal.getCompany(), companyPaymentMovement);
                         bankAccountService.makePayment(agencyBankAccount, companyBankAccount, commissionAmount);
-                        PaymentMovement agencyPaymentMovement = paymentMovementService.createPaymentMovement(agencyBankAccount, "Commission income", MovementType.INCOME, commissionAmount);
+                        PaymentMovement agencyPaymentMovement = paymentMovementService.createPaymentMovement(agencyBankAccount, "Commission income: ", MovementType.INCOME, commissionAmount);
                         agencyService.addPaymentMovementToAgency(agency, agencyPaymentMovement);
-                        PaymentMovement companyPaymentMovement2 = paymentMovementService.createPaymentMovement(companyBankAccount, "Commission Outcome", MovementType.OUTCOME, commissionAmount);
+                        PaymentMovement companyPaymentMovement2 = paymentMovementService.createPaymentMovement(companyBankAccount, "Commission Outcome: ", MovementType.OUTCOME, commissionAmount);
                         companyService.addPaymentMovementToInsuranceCompany(proposal.getCompany(), companyPaymentMovement2);
 
                         Policy policy = policyService.createPolicy(proposal.getCompany(), proposal.getVehicle(), discountedPrice, proposal.getStartDate(), proposal.getEndDate());

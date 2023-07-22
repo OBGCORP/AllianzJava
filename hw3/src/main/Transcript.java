@@ -14,6 +14,8 @@ public class Transcript {
         this.studentGrades = new ArrayList<>();
     }
 
+    // addCourseTaken method takes a CourseGrade object, add it to studentGrades list if input is not null
+    // and then calculates the GPA.
     public void addCourseTaken(CourseGrade courseGrade) {
         if (courseGrade != null) {
             this.studentGrades.add(courseGrade);

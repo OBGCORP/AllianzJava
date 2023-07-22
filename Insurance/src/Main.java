@@ -60,7 +60,14 @@ public class Main {
         Proposal proposal = proposalService.createProposal(insuranceCompany, vehicle,
                 new BigDecimal(1000), startDate, endDate, expireDate, new BigDecimal(100));
 
+        AccidentService accidentService = new AccidentService();
+        LocalDate accidentDate = LocalDate.now();
+        Accident accident = accidentService.createAccident(accidentDate, "Trafik kazasi gerceklesti",
+                new BigDecimal(5000), 6);
+        vehicleService.addAccidentToVehicle(vehicle, accident);
+
         insuranceRequestService.addProposalToInsuranceRequest(insuranceRequest, proposal);
         customerService.acceptProposal(customer, proposal, insuranceRequest, agency);
+
     }
 }

@@ -8,6 +8,8 @@ public class CourseGrade {
     private int courseCredit;
     private Grade gradeTaken;
 
+    // All constructors call the fourth constructor, which has all the parameters of this class.
+    // Empty fields in first three constructors are filled with default values.
     public CourseGrade(String courseDepartment) {
         this(courseDepartment, 100, 4, Grade.F);
     }
@@ -31,6 +33,7 @@ public class CourseGrade {
         return courseDepartment;
     }
 
+    // Course department is set as user input only if input matches the valid values. Else, default value is used.
     public void setCourseDepartment(String courseDepartment) {
         String[] validValues = {"CENG", "COMP", "ECE", "ME", "MATH"};
         for (int i = 0; i < validValues.length; i++) {
@@ -46,6 +49,7 @@ public class CourseGrade {
         return courseCode;
     }
 
+    // Course code is set as user input only if input matches the valid values. Else, default value is used.
     public void setCourseCode(int courseCode) {
         if (courseCode >= 100 && courseCode <= 599) {
             this.courseCode = courseCode;
@@ -58,6 +62,7 @@ public class CourseGrade {
         return courseCredit;
     }
 
+    // Course credit is set as user input only if input matches the valid values. Else, default value is used.
     public void setCourseCredit(int courseCredit) {
         if (courseCredit == 3) {
             this.courseCredit = courseCredit;
@@ -70,10 +75,12 @@ public class CourseGrade {
         return gradeTaken;
     }
 
+    // First setGradeTaken method accepts only enum values.
     public void setGradeTaken(Grade g) {
         this.gradeTaken = g;
     }
 
+    // Second setGradeTaken method accepts double values and rounds them into integers, if the input is between the valid values.
     public void setGradeTaken(double val) {
         if (0 <= val && val <= 4) {
             int gradeRounded = (int) Math.round(val);
