@@ -35,6 +35,6 @@ public class Transcript {
                 .replaceAll("\\[", "")
                     .replaceAll(", ", "")
                         .replaceAll("]", "")
-                + "GPA: " + String.format(Locale.US, "%.2f", this.GPA);
+                + "GPA: " + String.format(Locale.US, "%.2f", this.GPA) + "\n";
     }
 }

@@ -29,6 +29,13 @@ public class CourseGrade {
         setGradeTaken(gradeTaken);
     }
 
+    public CourseGrade(String courseDepartment, int courseCode, int courseCredit, Double gradeTaken) {
+        setCourseDepartment(courseDepartment);
+        setCourseCode(courseCode);
+        setCourseCredit(courseCredit);
+        setGradeTaken(gradeTaken);
+    }
+
     public String getCourseDepartment() {
         return courseDepartment;
     }
@@ -85,7 +92,7 @@ public class CourseGrade {
         if (0 <= val && val <= 4) {
             int gradeRounded = (int) Math.round(val);
             for (Grade grade : Grade.values()) {
-                if (grade.ordinal() == val) {
+                if (grade.ordinal() == gradeRounded) {
                     this.gradeTaken = grade;
                     return;
                 }

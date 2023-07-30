@@ -1,9 +1,12 @@
 import main.CourseGrade;
+import main.GenerateTranscript;
 import main.Transcript;
 import util.Grade;
 
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         CourseGrade course1 = new CourseGrade("CENG", 201, 4, Grade.C);
         CourseGrade course2 = new CourseGrade("CENG", 201, 4, Grade.A);
         CourseGrade course3 = new CourseGrade("CENG", 201, 4, Grade.C);
@@ -18,5 +21,10 @@ public class Main {
         transcript.addCourseTaken(course5);
 
         System.out.print(transcript);
+
+        GenerateTranscript generateTranscript = new GenerateTranscript();
+        generateTranscript.takeInputFromUser();
+
+        generateTranscript.takeInputFromFile();
     }
 }
