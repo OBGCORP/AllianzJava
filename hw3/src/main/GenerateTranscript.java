@@ -77,5 +77,6 @@ public class GenerateTranscript {
         }
 
         System.out.println(transcript);
+        sc.close();
     }
 }
