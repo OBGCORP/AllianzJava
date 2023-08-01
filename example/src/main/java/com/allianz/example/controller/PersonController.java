@@ -1,6 +1,8 @@
 package com.allianz.example.controller;
 
 import com.allianz.example.model.Person;
+import com.allianz.example.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("example")
-public class ExampleController {
+@RequestMapping("person")
+public class PersonController {
+
+    @Autowired
+    PersonService personService;
+
     @GetMapping("hello-world")
     public ResponseEntity<String> helloWorldApi() {
         return new ResponseEntity<>("Hello World", HttpStatus.OK);
@@ -85,4 +91,59 @@ public class ExampleController {
         }
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
+
+    @PostMapping("person")
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
+        Person person1 = personService.createPerson(person.getName(), person.getSurname(), person.getTc(), person.getBirthYear());
+        return new ResponseEntity<>(person1, HttpStatus.CREATED);
+    }
+
+    @PutMapping("person/{tc}")
+    public ResponseEntity<Person> createPerson(@RequestBody Person person, @PathVariable String tc) {
+        List<Person> personList = new ArrayList<>();
+
+        Person personExist = new Person();
+        personExist.setName("Jack");
+        personExist.setSurname("Sparrow");
+        personExist.setBirthYear(1982);
+        personExist.setTc("23531467730");
+
+        personList.add(personExist);
+
+        for (Person p : personList) {
+            if (p.getTc().equals(tc)) {
+                p.setTc(person.getTc());
+                p.setName(person.getName());
+                p.setSurname(person.getSurname());
+                p.setBirthYear(person.getBirthYear());
+
+                return new ResponseEntity<>(person, HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("person/{tc}")
+    public ResponseEntity<Person> deletePerson(@PathVariable String tc) {
+        List<Person> personList = new ArrayList<>();
+
+        Person personExist = new Person();
+        personExist.setName("Jack");
+        personExist.setSurname("Sparrow");
+        personExist.setBirthYear(1982);
+        personExist.setTc("23531467730");
+
+        personList.add(personExist);
+
+        for (Person p : personList) {
+            if (p.getTc().equals(tc)) {
+                personList.remove(p);
+                return new ResponseEntity<>(p, HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
 }
