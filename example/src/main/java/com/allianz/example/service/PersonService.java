@@ -1,22 +1,39 @@
 package com.allianz.example.service;
 
+import com.allianz.example.database.entity.PersonEntity;
+import com.allianz.example.database.repository.PersonEntityRepository;
 import com.allianz.example.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PersonService {
 
     @Value("${gizem:25}")
     int value;
+    @Autowired
+    PersonEntityRepository personEntityRepository;
 
-    public Person createPerson(String name, String surname, String tc, int birthYear) {
-        Person person = new Person();
+    public PersonEntity createPerson(String name, String surname, String tc, int birthYear) {
+        PersonEntity person = new PersonEntity();
         person.setTc(tc);
         person.setName(name);
         person.setSurname(surname);
         person.setBirthYear(birthYear);
+
+        personEntityRepository.save(person);
+
         System.out.println(value);
         return person;
+    }
+
+    public List<PersonEntity> getPersonNameStartWith(String key) {
+        return personEntityRepository.findAllByNameStartingWith(key);
+    }
+    public List<PersonEntity> getPersonNameIContains(String key) {
+        return personEntityRepository.findAllByNameContainsIgnoreCase(key);
     }
 }

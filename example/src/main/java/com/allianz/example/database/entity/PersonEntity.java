@@ -17,7 +17,7 @@ public class PersonEntity extends BaseEntity {
     @Column
     private String surname;
     @Column
-    private String birthYear;
+    private int birthYear;
     @Column
     private String tc;
 }

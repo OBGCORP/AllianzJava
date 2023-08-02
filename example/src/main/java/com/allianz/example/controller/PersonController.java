@@ -1,5 +1,6 @@
 package com.allianz.example.controller;
 
+import com.allianz.example.database.entity.PersonEntity;
 import com.allianz.example.model.Person;
 import com.allianz.example.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,8 +94,8 @@ public class PersonController {
     }
 
     @PostMapping("person")
-    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
-        Person person1 = personService.createPerson(person.getName(), person.getSurname(), person.getTc(), person.getBirthYear());
+    public ResponseEntity<PersonEntity> createPerson(@RequestBody Person person) {
+        PersonEntity person1 = personService.createPerson(person.getName(), person.getSurname(), person.getTc(), person.getBirthYear());
         return new ResponseEntity<>(person1, HttpStatus.CREATED);
     }
 
@@ -146,4 +147,13 @@ public class PersonController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("person-list-by-name-start-with/{key}")
+    public ResponseEntity<List<PersonEntity>> getPersonListByNameStartWith(@PathVariable String key) {
+        return new ResponseEntity<>(personService.getPersonNameStartWith(key), HttpStatus.OK);
+    }
+
+    @GetMapping("person-list-by-name-i-contains/{key}")
+    public ResponseEntity<List<PersonEntity>> getPersonListByNameContains(@PathVariable String key) {
+        return new ResponseEntity<>(personService.getPersonNameIContains(key), HttpStatus.OK);
+    }
 }

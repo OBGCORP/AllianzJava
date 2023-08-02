@@ -36,4 +36,5 @@ public class BaseEntity {
     protected void onCreate() {
         setUuid(java.util.UUID.randomUUID());
     }
+
 }
