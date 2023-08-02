@@ -12,4 +12,6 @@ public interface PersonEntityRepository extends JpaRepository<PersonEntity, Long
     List<PersonEntity> findAllByNameStartingWith(String key);
 
     List<PersonEntity> findAllByNameContainsIgnoreCase(String key);
+
+    List<PersonEntity> findAllByNameStartingWithOrSurnameStartingWith(String name, String surname);
 }

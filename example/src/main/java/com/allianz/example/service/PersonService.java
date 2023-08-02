@@ -36,4 +36,9 @@ public class PersonService {
     public List<PersonEntity> getPersonNameIContains(String key) {
         return personEntityRepository.findAllByNameContainsIgnoreCase(key);
     }
+
+    public List<PersonEntity> getPersonNameStartWithAndSurnameStartWith(String name, String surname) {
+        return personEntityRepository.findAllByNameStartingWithOrSurnameStartingWith(name, surname);
+    }
+
 }

@@ -156,4 +156,9 @@ public class PersonController {
     public ResponseEntity<List<PersonEntity>> getPersonListByNameContains(@PathVariable String key) {
         return new ResponseEntity<>(personService.getPersonNameIContains(key), HttpStatus.OK);
     }
+
+    @GetMapping("person-list-by-name-surname-start-with/name/{name}/surname/{surname}")
+    public ResponseEntity<List<PersonEntity>> getPersonListByNameContains(@PathVariable String name, @PathVariable String surname) {
+        return new ResponseEntity<>(personService.getPersonNameStartWithAndSurnameStartWith(name, surname), HttpStatus.OK);
+    }
 }
