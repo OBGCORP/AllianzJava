@@ -1,6 +1,5 @@
 package com.allianz.springpokemon.controller;
 
-import com.allianz.springpokemon.database.entity.ArenaEntity;
 import com.allianz.springpokemon.database.entity.CharacterEntity;
 import com.allianz.springpokemon.model.Character;
 import com.allianz.springpokemon.service.CharacterService;

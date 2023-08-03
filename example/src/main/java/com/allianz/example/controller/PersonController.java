@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("person")
@@ -125,26 +126,13 @@ public class PersonController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("person/{tc}")
-    public ResponseEntity<Person> deletePerson(@PathVariable String tc) {
-        List<Person> personList = new ArrayList<>();
-
-        Person personExist = new Person();
-        personExist.setName("Jack");
-        personExist.setSurname("Sparrow");
-        personExist.setBirthYear(1982);
-        personExist.setTc("23531467730");
-
-        personList.add(personExist);
-
-        for (Person p : personList) {
-            if (p.getTc().equals(tc)) {
-                personList.remove(p);
-                return new ResponseEntity<>(p, HttpStatus.OK);
-            }
+    @DeleteMapping("person/{uuid}")
+    public ResponseEntity<Boolean> deletePerson(@PathVariable UUID uuid) {
+        Boolean isDeleted = personService.deletePersonByUUID(uuid);
+        if (isDeleted) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("person-list-by-name-start-with/{key}")
@@ -160,5 +148,25 @@ public class PersonController {
     @GetMapping("person-list-by-name-surname-start-with/name/{name}/surname/{surname}")
     public ResponseEntity<List<PersonEntity>> getPersonListByNameContains(@PathVariable String name, @PathVariable String surname) {
         return new ResponseEntity<>(personService.getPersonNameStartWithAndSurnameStartWith(name, surname), HttpStatus.OK);
+    }
+
+    @GetMapping("person-uuid/{uuid}")
+    public ResponseEntity<PersonEntity> getPersonByUUID(@PathVariable UUID uuid) {
+        PersonEntity personEntity = personService.getPersonByUUID(uuid);
+        if (personEntity != null) {
+            return new ResponseEntity<>(personEntity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("person/{uuid}")
+    public ResponseEntity<PersonEntity> updatePersonByUUID(@PathVariable UUID uuid, @RequestBody PersonEntity newPersonEntity) {
+        PersonEntity personEntity = personService.updatePersonByUUID(uuid, newPersonEntity);
+        if (personEntity != null) {
+            return new ResponseEntity<>(personEntity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 }
