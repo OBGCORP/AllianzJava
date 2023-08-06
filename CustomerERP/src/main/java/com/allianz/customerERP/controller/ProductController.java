@@ -49,8 +49,8 @@ public class ProductController {
     @PostMapping("create")
     public ResponseEntity<Boolean> createProduct(@RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(productService.createProduct(productDTO.getName(),
-                productDTO.getNonKdvAppliedPrice(), productDTO.getIsKdvApplied(), productDTO.getPrice(),
-                productDTO.getStock(), productDTO.getKdv(), productDTO.getOrder()), HttpStatus.CREATED);
+                productDTO.getIsKdvApplied(), productDTO.getPrice(),
+                productDTO.getStock(), productDTO.getKdv()), HttpStatus.CREATED);
     }
 
     @Modifying
