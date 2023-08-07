@@ -68,7 +68,7 @@ public class PersonController {
     @GetMapping("person-by-uuid/{uuid}")
     public ResponseEntity<PersonEntity> getPersonByUUID(@PathVariable UUID uuid) {
 
-        PersonEntity personEntity = personService.getDTOByUuid(uuid);
+        PersonEntity personEntity = personService.getPersonByUUID(uuid);
 
         if (personEntity != null) {
 
