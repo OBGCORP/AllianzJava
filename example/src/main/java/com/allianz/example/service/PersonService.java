@@ -2,7 +2,9 @@ package com.allianz.example.service;
 
 import com.allianz.example.database.entity.PersonEntity;
 import com.allianz.example.database.repository.PersonEntityRepository;
-import com.allianz.example.model.Person;
+import com.allianz.example.model.PersonDTO;
+import com.allianz.example.model.requestDTO.PersonRequestDTO;
+import com.allianz.example.util.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,11 +14,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+//bean
 @Service
-public class PersonService {
+public class PersonService extends BaseService<PersonEntity, PersonDTO, PersonRequestDTO> {
 
-    @Value("${gizem:25}")
-    int value;
     @Autowired
     PersonEntityRepository personEntityRepository;
 
@@ -29,9 +30,9 @@ public class PersonService {
 
         personEntityRepository.save(person);
 
-        System.out.println(value);
         return person;
     }
+
 
     public List<PersonEntity> getPersonNameStartWith(String key) {
         return personEntityRepository.findAllByNameStartingWith(key);
@@ -41,20 +42,26 @@ public class PersonService {
         return personEntityRepository.findAllByNameContainsIgnoreCase(key);
     }
 
+
     public List<PersonEntity> getPersonNameStartWithAndSurnameStartWith(String name, String surname) {
         return personEntityRepository.findAllByNameStartingWithOrSurnameStartingWith(name, surname);
     }
 
+
     public PersonEntity getPersonByUUID(UUID uuid) {
         Optional<PersonEntity> personEntityOptional = personEntityRepository.findByUuid(uuid);
-
         return personEntityOptional.orElse(null);
     }
 
+
+
+    @Transactional
     public PersonEntity updatePersonByUUID(UUID uuid, PersonEntity newPersonEntity) {
+
         PersonEntity personEntity = getPersonByUUID(uuid);
 
         if (personEntity != null) {
+
             personEntity.setName(newPersonEntity.getName());
             personEntity.setSurname(newPersonEntity.getSurname());
             personEntity.setBirthYear(newPersonEntity.getBirthYear());
@@ -62,21 +69,28 @@ public class PersonService {
 
             personEntityRepository.save(personEntity);
 
+
+
             return personEntity;
+        } else {
+            return null;
         }
-        return null;
+
+
     }
+
 
     @Transactional
     public Boolean deletePersonByUUID(UUID uuid) {
         PersonEntity personEntity = getPersonByUUID(uuid);
 
         if (personEntity != null) {
-
-            personEntityRepository.deleteByUuid(uuid);
-
+            personEntityRepository.deleteById(personEntity.getId());
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
+
+
 }
