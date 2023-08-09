@@ -1,0 +1,6 @@
+com\allianz\example\service\PersonService.class
+com\allianz\example\controller\PersonController.class
+com\allianz\example\model\PersonDTO.class
+com\allianz\example\util\dbutil\BaseEntity.class
+com\allianz\example\ExampleApplication.class
+com\allianz\example\model\Person.class
