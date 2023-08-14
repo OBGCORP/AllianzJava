@@ -5,6 +5,7 @@ import com.allianz.example.database.repository.AddressEntityRepository;
 import com.allianz.example.mapper.AddressMapper;
 import com.allianz.example.model.AddressDTO;
 import com.allianz.example.model.requestDTO.AddressRequestDTO;
+import com.allianz.example.util.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,41 +14,23 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AddressService {
+public class AddressService extends BaseService<AddressEntity, AddressDTO,
+        AddressRequestDTO, AddressMapper, AddressEntityRepository> {
 
     @Autowired
-    AddressEntityRepository addressEntityRepository;
+    private AddressEntityRepository addressEntityRepository;
 
     @Autowired
-    AddressMapper addressMapper;
+    private AddressMapper addressMapper;
 
 
-    public AddressDTO save(AddressRequestDTO dto) {
-
-        AddressEntity addressEntity = addressMapper.requestDTOToEntity(dto);
-
-        addressEntityRepository.save(addressEntity);
-
-        return addressMapper.entityToDTO(addressEntity);
+    @Override
+    public AddressMapper getMapper() {
+        return addressMapper;
     }
 
-
-    public List<AddressDTO> getAll() {
-        List<AddressEntity> addressEntityList = addressEntityRepository.findAll();
-        return addressMapper.entityListToDTOList(addressEntityList);
+    @Override
+    public AddressEntityRepository getRepository() {
+        return addressEntityRepository;
     }
-
-    public AddressDTO getByUUID(UUID uuid) {
-
-        Optional<AddressEntity> addressEntityOptional = addressEntityRepository.findByUuid(uuid);
-        if (addressEntityOptional.isPresent()) {
-
-        } else {
-
-        }
-
-        return null;
-    }
-
-
 }

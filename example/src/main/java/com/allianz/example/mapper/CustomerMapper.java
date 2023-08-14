@@ -3,49 +3,63 @@ package com.allianz.example.mapper;
 import com.allianz.example.database.entity.CustomerEntity;
 import com.allianz.example.model.CustomerDTO;
 import com.allianz.example.model.requestDTO.CustomerRequestDTO;
-import com.allianz.example.util.IBaseMapper;
+import com.allianz.example.util.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CustomerMapper implements IBaseMapper<CustomerDTO, CustomerEntity, CustomerRequestDTO> {
+public class CustomerMapper implements BaseMapper<CustomerDTO, CustomerEntity, CustomerRequestDTO> {
+
+    private final PersonMapper personMapper;
+    private final OrderMapper orderMapper;
+
+    @Autowired
+    @Lazy
+    public CustomerMapper(PersonMapper personMapper, OrderMapper orderMapper) {
+        this.personMapper = personMapper;
+        this.orderMapper = orderMapper;
+    }
+
 
     @Override
     public CustomerDTO entityToDTO(CustomerEntity entity) {
-
         CustomerDTO customerDTO = new CustomerDTO();
-
         customerDTO.setId(entity.getId());
-        customerDTO.setPerson(entity.getPerson());
-        customerDTO.setUuid(entity.getUuid());
-        customerDTO.setOrderList(entity.getOrderList());
         customerDTO.setCompanyName(entity.getCompanyName());
-        customerDTO.setIsCorporate(entity.getIsCorporate());
-        customerDTO.setTaxNumber(entity.getTaxNumber());
         customerDTO.setCreationDate(entity.getCreationDate());
+        customerDTO.setUuid(entity.getUuid());
+        customerDTO.setIsCorporate(entity.getIsCorporate());
         customerDTO.setUpdatedDate(entity.getUpdatedDate());
+        customerDTO.setTaxNumber(entity.getTaxNumber());
         customerDTO.setTaxOffice(entity.getTaxOffice());
+        customerDTO.setPerson(personMapper.entityToDTO(entity.getPerson()));
+        customerDTO.setOrderList(orderMapper.entityListToDTOList(entity.getOrderList()));
 
         return customerDTO;
     }
 
     @Override
+    public CustomerEntity requestDTOToExistEntity(CustomerRequestDTO dto, CustomerEntity entity) {
+        return null;
+    }
+
+    @Override
     public CustomerEntity dtoToEntity(CustomerDTO dto) {
-
         CustomerEntity customerEntity = new CustomerEntity();
-
+        customerEntity.setUpdatedDate(dto.getUpdatedDate());
         customerEntity.setId(dto.getId());
-        customerEntity.setPerson(dto.getPerson());
-        customerEntity.setUuid(dto.getUuid());
-        customerEntity.setOrderList(dto.getOrderList());
         customerEntity.setCompanyName(dto.getCompanyName());
+        customerEntity.setCreationDate(dto.getCreationDate());
+        customerEntity.setUuid(dto.getUuid());
         customerEntity.setIsCorporate(dto.getIsCorporate());
         customerEntity.setTaxNumber(dto.getTaxNumber());
-        customerEntity.setCreationDate(dto.getCreationDate());
-        customerEntity.setUpdatedDate(dto.getUpdatedDate());
         customerEntity.setTaxOffice(dto.getTaxOffice());
+        customerEntity.setPerson(personMapper.dtoToEntity(dto.getPerson()));
+        customerEntity.setOrderList(orderMapper.dtoListTOEntityList(dto.getOrderList()));
 
         return customerEntity;
     }
@@ -53,42 +67,42 @@ public class CustomerMapper implements IBaseMapper<CustomerDTO, CustomerEntity, 
     @Override
     public List<CustomerDTO> entityListToDTOList(List<CustomerEntity> customerEntities) {
 
-        List<CustomerDTO> customerDTOList = new ArrayList<>();
 
-        for (CustomerEntity entity: customerEntities) {
-            customerDTOList.add(entityToDTO(entity));
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
+        for (CustomerEntity customer : customerEntities) {
+            customerDTOS.add(entityToDTO(customer));
         }
-
-        return customerDTOList;
+        return customerDTOS;
     }
 
     @Override
     public List<CustomerEntity> dtoListTOEntityList(List<CustomerDTO> customerDTOS) {
-        List<CustomerEntity> customerEntityList = new ArrayList<>();
-
-        for (CustomerDTO dto: customerDTOS) {
-            customerEntityList.add(dtoToEntity(dto));
+        List<CustomerEntity> customerEntities = new ArrayList<>();
+        for (CustomerDTO customerDTO : customerDTOS) {
+            customerEntities.add(dtoToEntity(customerDTO));
         }
-
-        return customerEntityList;
+        return customerEntities;
     }
 
     @Override
     public CustomerEntity requestDTOToEntity(CustomerRequestDTO dto) {
+        CustomerEntity customer = new CustomerEntity();
+        customer.setId(dto.getId());
+        customer.setCompanyName(dto.getCompanyName());
+        customer.setCreationDate(dto.getCreationDate());
+        customer.setUuid(dto.getUuid());
+        customer.setIsCorporate(dto.getIsCorporate());
+        customer.setUpdatedDate(dto.getUpdatedDate());
+        customer.setTaxNumber(dto.getTaxNumber());
+        customer.setTaxOffice(dto.getTaxOffice());
+        customer.setPerson(personMapper.requestDTOToEntity(dto.getPerson()));
+        customer.setOrderList(orderMapper.requestDTOListTOEntityList(dto.getOrderList()));
 
-        CustomerEntity customerEntity = new CustomerEntity();
+        return customer;
+    }
 
-        customerEntity.setId(dto.getId());
-        customerEntity.setPerson(dto.getPerson());
-        customerEntity.setUuid(dto.getUuid());
-        customerEntity.setOrderList(dto.getOrderList());
-        customerEntity.setCompanyName(dto.getCompanyName());
-        customerEntity.setIsCorporate(dto.getIsCorporate());
-        customerEntity.setTaxNumber(dto.getTaxNumber());
-        customerEntity.setCreationDate(dto.getCreationDate());
-        customerEntity.setUpdatedDate(dto.getUpdatedDate());
-        customerEntity.setTaxOffice(dto.getTaxOffice());
-
-        return customerEntity;
+    @Override
+    public List<CustomerEntity> requestDTOListTOEntityList(List<CustomerRequestDTO> customerRequestDTOS) {
+        return null;
     }
 }

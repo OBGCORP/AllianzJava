@@ -7,13 +7,19 @@ import org.hibernate.annotations.Fetch;
 
 import java.math.BigDecimal;
 
-@Data
-@Entity
 @Table
+@Entity
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "address_uuid"
+        )
+)
+@Data
 public class OrderItemEntity extends BaseEntity {
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private ProductEntity product;
 
     @Column

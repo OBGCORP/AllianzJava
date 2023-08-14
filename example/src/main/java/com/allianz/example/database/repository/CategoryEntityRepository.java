@@ -1,14 +1,14 @@
 package com.allianz.example.database.repository;
 
-import com.allianz.example.database.entity.BillEntity;
 import com.allianz.example.database.entity.CategoryEntity;
-import com.allianz.example.database.entity.CustomerEntity;
+import com.allianz.example.util.IBaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface CategoryEntityRepository extends JpaRepository<CategoryEntity, Long> {
-    CategoryEntity findByUuid(UUID uuid);
-    CategoryEntity deleteByUuid(UUID uuid);
+@Repository
+public interface CategoryEntityRepository extends IBaseRepository<CategoryEntity> {
+
 }

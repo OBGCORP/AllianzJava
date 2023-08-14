@@ -7,12 +7,17 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
-@Data
-@Entity
 @Table
+@Entity
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "address_uuid"
+        )
+)
+@Data
 public class ProductEntity extends BaseEntity {
 
 

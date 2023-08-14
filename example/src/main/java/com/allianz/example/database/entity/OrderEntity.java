@@ -9,10 +9,17 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
-@Entity
 @Table
+@Entity
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "address_uuid"
+        )
+)
+@Data
 public class OrderEntity extends BaseEntity {
+
 
     @ManyToOne
     private CustomerEntity customer;
@@ -25,4 +32,8 @@ public class OrderEntity extends BaseEntity {
 
     @Column
     private BigDecimal totalSellPrice;
+
+
+
+
 }

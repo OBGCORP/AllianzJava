@@ -1,77 +1,87 @@
 package com.allianz.example.mapper;
 
+
 import com.allianz.example.database.entity.TaxEntity;
+
 import com.allianz.example.model.TaxDTO;
 import com.allianz.example.model.requestDTO.TaxRequestDTO;
-import com.allianz.example.util.IBaseMapper;
+
+import com.allianz.example.util.BaseMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Component
-public class TaxMapper implements IBaseMapper<TaxDTO, TaxEntity, TaxRequestDTO> {
-
+public class TaxMapper implements BaseMapper<TaxDTO, TaxEntity, TaxRequestDTO> {
     @Override
     public TaxDTO entityToDTO(TaxEntity entity) {
-        TaxDTO dto = new TaxDTO();
 
-        dto.setId(entity.getId());
-        dto.setUuid(entity.getUuid());
-        dto.setName(entity.getName());
-        dto.setCode(entity.getCode());
-        dto.setRate(entity.getRate());
-        dto.setCreationDate(entity.getCreationDate());
-        dto.setUpdatedDate(entity.getUpdatedDate());
+        TaxDTO taxDTO = new TaxDTO();
+        taxDTO.setUuid(entity.getUuid());
+        taxDTO.setCreationDate(entity.getCreationDate());
+        taxDTO.setId(entity.getId());
+        taxDTO.setUpdatedDate(entity.getUpdatedDate());
+        taxDTO.setCode(entity.getCode());
+        taxDTO.setName(entity.getName());
+        taxDTO.setRate(entity.getRate());
 
-        return dto;
+
+        return taxDTO;
     }
 
     @Override
     public TaxEntity dtoToEntity(TaxDTO dto) {
         TaxEntity entity = new TaxEntity();
-
-        entity.setId(dto.getId());
         entity.setUuid(dto.getUuid());
+        entity.setCreationDate(dto.getCreationDate());
+        entity.setId(dto.getId());
+        entity.setUpdatedDate(dto.getUpdatedDate());
+        entity.setCode(dto.getCode());
         entity.setName(dto.getName());
         entity.setRate(dto.getRate());
-        entity.setCreationDate(dto.getCreationDate());
-        entity.setUpdatedDate(dto.getUpdatedDate());
 
         return entity;
     }
 
     @Override
     public List<TaxDTO> entityListToDTOList(List<TaxEntity> taxEntities) {
-        List<TaxDTO> dtoList = new ArrayList<>();
-
-        for(TaxEntity taxEntity : taxEntities){
-            dtoList.add(entityToDTO((taxEntity)));
+        List<TaxDTO> dtos = new ArrayList<>();
+        for (TaxEntity entity: taxEntities) {
+            dtos.add(entityToDTO(entity));
         }
-        return dtoList;
+        return dtos;
     }
 
     @Override
     public List<TaxEntity> dtoListTOEntityList(List<TaxDTO> taxDTOS) {
-        List<TaxEntity> entityList = new ArrayList<>();
-
-        for(TaxDTO taxDTO : taxDTOS){
-            entityList.add(dtoToEntity(taxDTO));
+        List<TaxEntity> entities = new ArrayList<>();
+        for (TaxDTO dto: taxDTOS) {
+            entities.add(dtoToEntity(dto));
         }
-        return entityList;
+        return entities;
     }
 
     @Override
     public TaxEntity requestDTOToEntity(TaxRequestDTO dto) {
         TaxEntity entity = new TaxEntity();
-
-        entity.setId(dto.getId());
-        entity.setUuid(dto.getUuid());
         entity.setName(dto.getName());
+        entity.setRate(dto.getRate());
         entity.setCode(dto.getCode());
-        entity.setCreationDate(dto.getCreationDate());
-        entity.setUpdatedDate(dto.getUpdatedDate());
+
 
         return entity;
+    }
+
+    @Override
+    public TaxEntity requestDTOToExistEntity(TaxRequestDTO dto, TaxEntity entity) {
+        entity.setCode(dto.getCode());
+        entity.setName(dto.getName());
+        entity.setRate(dto.getRate());
+        return entity;
+    }
+
+    @Override
+    public List<TaxEntity> requestDTOListTOEntityList(List<TaxRequestDTO> taxRequestDTOS) {
+        return null;
     }
 }

@@ -17,6 +17,9 @@ import java.util.UUID;
 @RequestMapping("PersonDTO")
 public class PersonController {
 
+
+    //endpoint->son nokta-bitis noktası
+
     //localhost:8080/example
 
     @Autowired
@@ -136,25 +139,10 @@ public class PersonController {
     }
 
 
-    @GetMapping("PersonDTO-list-by-name-start-with/{key}")
-    public ResponseEntity<List<PersonEntity>> getPersonDTOListByNameStartWith(@PathVariable String key) {
-
-        return new ResponseEntity<>(personService.getPersonNameStartWith(key), HttpStatus.OK);
-    }
 
 
-    @GetMapping("PersonDTO-list-by-name-i-contains/{key}")
-    public ResponseEntity<List<PersonEntity>> getPersonDTOListByNameICOntains(@PathVariable String key) {
-        return new ResponseEntity<>(personService.getPersonNameIContains(key), HttpStatus.OK);
-    }
 
 
-    @GetMapping("PersonDTO-list-by-name-surname-start-with/name/{name}/surname/{surname}")
-    public ResponseEntity<List<PersonEntity>> getPersonDTOListByNameICOntains(
-            @PathVariable String name, @PathVariable String surname) {
-        return new ResponseEntity<>(
-                personService.getPersonNameStartWithAndSurnameStartWith(name, surname), HttpStatus.OK);
-    }
 
 
     @GetMapping("PersonDTO-by-uuid/{uuid}")

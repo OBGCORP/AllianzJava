@@ -3,14 +3,21 @@ package com.allianz.example.mapper;
 import com.allianz.example.database.entity.AddressEntity;
 import com.allianz.example.model.AddressDTO;
 import com.allianz.example.model.requestDTO.AddressRequestDTO;
-import com.allianz.example.util.IBaseMapper;
+import com.allianz.example.util.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AddressMapper implements IBaseMapper<AddressDTO, AddressEntity, AddressRequestDTO> {
+public class AddressMapper implements BaseMapper<AddressDTO, AddressEntity, AddressRequestDTO> {
+    private final PersonMapper personMapper;
+
+    @Autowired
+    public AddressMapper(PersonMapper personMapper) {
+        this.personMapper = personMapper;
+    }
+
     @Override
     public AddressDTO entityToDTO(AddressEntity entity) {
         AddressDTO addressDTO = new AddressDTO();
@@ -20,6 +27,7 @@ public class AddressMapper implements IBaseMapper<AddressDTO, AddressEntity, Add
         addressDTO.setAddress(entity.getAddress());
         addressDTO.setTitle(entity.getTitle());
         addressDTO.setUpdatedDate(entity.getUpdatedDate());
+        addressDTO.setPerson(personMapper.entityToDTO(entity.getPerson()));
 
         return addressDTO;
     }
@@ -27,15 +35,18 @@ public class AddressMapper implements IBaseMapper<AddressDTO, AddressEntity, Add
     @Override
     public AddressEntity dtoToEntity(AddressDTO dto) {
         AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setAddress(dto.getAddress());
-        addressEntity.setId(dto.getId());
-        addressEntity.setTitle(dto.getTitle());
-        addressEntity.setUuid(dto.getUuid());
         addressEntity.setCreationDate(dto.getCreationDate());
+        addressEntity.setUuid(dto.getUuid());
+        addressEntity.setId(dto.getId());
+        addressEntity.setAddress(dto.getAddress());
+        addressEntity.setTitle(dto.getTitle());
         addressEntity.setUpdatedDate(dto.getUpdatedDate());
+        addressEntity.setPerson(personMapper.dtoToEntity(dto.getPerson()));
 
         return addressEntity;
+
     }
+
     @Override
     public List<AddressDTO> entityListToDTOList(List<AddressEntity> addressEntities) {
         List<AddressDTO> addressDTOList = new ArrayList<>();
@@ -49,13 +60,17 @@ public class AddressMapper implements IBaseMapper<AddressDTO, AddressEntity, Add
 
     @Override
     public List<AddressEntity> dtoListTOEntityList(List<AddressDTO> addressDTOS) {
-        List<AddressEntity> addressEntityList = new ArrayList<>();
+        List<AddressEntity> addressList = new ArrayList<>();
 
-        for (AddressDTO addressDTO : addressDTOS) {
-            addressEntityList.add(dtoToEntity(addressDTO));
+        for (AddressDTO addressDTO:addressDTOS) {
+            addressList.add(dtoToEntity(addressDTO));
         }
-        return addressEntityList;
+
+        return addressList;
+
+
     }
+
     @Override
     public AddressEntity requestDTOToEntity(AddressRequestDTO dto) {
         AddressEntity entity = new AddressEntity();
@@ -68,7 +83,13 @@ public class AddressMapper implements IBaseMapper<AddressDTO, AddressEntity, Add
         return entity;
     }
 
+    @Override
+    public List<AddressEntity> requestDTOListTOEntityList(List<AddressRequestDTO> addressRequestDTOS) {
+        return null;
+    }
 
-
-
+    @Override
+    public AddressEntity requestDTOToExistEntity(AddressRequestDTO dto, AddressEntity entity) {
+        return null;
+    }
 }

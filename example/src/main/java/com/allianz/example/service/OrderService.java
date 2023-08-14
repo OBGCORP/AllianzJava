@@ -1,78 +1,39 @@
 package com.allianz.example.service;
 
 import com.allianz.example.database.entity.OrderEntity;
-import com.allianz.example.database.entity.OrderItemEntity;
-import com.allianz.example.database.entity.ProductEntity;
 import com.allianz.example.database.repository.OrderEntityRepository;
-import com.allianz.example.database.repository.OrderItemRepository;
-import com.allianz.example.database.repository.ProductEntityRepository;
-import com.allianz.example.database.repository.SellerEntityRepository;
 import com.allianz.example.mapper.OrderMapper;
 import com.allianz.example.model.OrderDTO;
 import com.allianz.example.model.requestDTO.OrderRequestDTO;
-import jakarta.persistence.EntityNotFoundException;
+import com.allianz.example.util.BaseDTO;
+import com.allianz.example.util.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-
 @Service
-public class OrderService {
 
-    @Autowired
-    OrderEntityRepository orderEntityRepository;
+public class OrderService extends BaseService<OrderEntity, OrderDTO,
+        OrderRequestDTO, OrderMapper, OrderEntityRepository> {
 
-    @Autowired
-    OrderMapper orderMapper;
+    private OrderMapper orderMapper;
 
-    @Autowired
-    OrderItemRepository orderItemRepository;
+    private OrderEntityRepository orderEntityRepository;
 
-    public OrderEntity createOrder(OrderRequestDTO request) {
-        OrderEntity orderEntity = new OrderEntity();
-
-        orderEntity.setOrderStatus(request.getOrderStatus());
-        orderEntity.setOrderItemList(request.getOrderItemList());
-        orderEntity.setCustomer(request.getCustomer());
-        orderEntity.setTotalSellPrice(request.getTotalSellPrice());
-
-        orderEntityRepository.save(orderEntity);
-
-        return orderEntity;
+    public OrderService(OrderMapper orderMapper, OrderEntityRepository orderEntityRepository) {
+        this.orderMapper = orderMapper;
+        this.orderEntityRepository = orderEntityRepository;
     }
 
-    public List<OrderDTO> getAllOrders() {
-        List<OrderEntity> orderEntities = orderEntityRepository.findAll();
-        return orderMapper.entityListToDTOList(orderEntities);
+    @Override
+    public OrderMapper getMapper() {
+        return null;
     }
 
-    public OrderDTO getByUUID(UUID uuid) {
-        OrderEntity orderEntity = orderEntityRepository.findByUuid(uuid);
-
-        if (orderEntity != null) {
-            return orderMapper.entityToDTO(orderEntity);
-        } else {
-            throw new EntityNotFoundException("Order not found with UUID: " + uuid);
-        }
+    @Override
+    public OrderEntityRepository getRepository() {
+        return null;
     }
 
-    public OrderEntity updateOrder(UUID uuid, OrderRequestDTO request) {
-        if (uuid != null) {
-            OrderEntity orderEntity = orderEntityRepository.findByUuid(uuid);
-
-            orderEntity.setOrderStatus(request.getOrderStatus());
-            orderEntity.setOrderItemList(request.getOrderItemList());
-            orderEntity.setCustomer(request.getCustomer());
-            orderEntity.setTotalSellPrice(request.getTotalSellPrice());
-
-            return orderEntityRepository.save(orderEntity);
-        } else {
-            throw new EntityNotFoundException("Order not found with UUID: " + uuid);
-        }
-    }
-
-    public void deleteOrder(UUID uuid) {
-        orderEntityRepository.deleteByUuid(uuid);
-    }
 }

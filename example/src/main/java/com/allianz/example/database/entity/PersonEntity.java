@@ -34,7 +34,7 @@ public class PersonEntity extends BaseEntity {
 
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
-    private List<AddressEntity> addressEntityList;
+    private List<AddressEntity> addressList;
 
 
 }

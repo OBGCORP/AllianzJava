@@ -6,9 +6,15 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
-@Entity
 @Table
+@Entity
+@AttributeOverride(
+        name = "uuid",
+        column = @Column(
+                name = "address_uuid"
+        )
+)
+@Data
 public class CustomerEntity extends BaseEntity {
 
     @OneToOne

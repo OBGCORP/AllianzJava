@@ -13,4 +13,5 @@ public class SellerDTO extends BaseDTO {
     private String shopName;
     private String taxNumber;
     private String taxOffice;
+
 }

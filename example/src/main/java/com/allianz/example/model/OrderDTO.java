@@ -12,8 +12,11 @@ import java.util.List;
 
 @Data
 public class OrderDTO extends BaseDTO {
-    private CustomerEntity customer;
+    private CustomerDTO customer;
     private OrderStatusEnum orderStatus;
-    private List<OrderItemEntity> orderItemList;
+    private List<OrderItemDTO> orderItemList;
     private BigDecimal totalSellPrice;
+
+
+
 }

@@ -1,76 +1,104 @@
 package com.allianz.example.mapper;
 
 import com.allianz.example.database.entity.CategoryEntity;
+import com.allianz.example.database.entity.ProductEntity;
 import com.allianz.example.model.CategoryDTO;
+import com.allianz.example.model.ProductDTO;
 import com.allianz.example.model.requestDTO.CategoryRequestDTO;
-import com.allianz.example.util.IBaseMapper;
+import com.allianz.example.util.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
-public class CategoryMapper implements IBaseMapper<CategoryDTO, CategoryEntity, CategoryRequestDTO> {
+public class CategoryMapper implements BaseMapper<CategoryDTO, CategoryEntity, CategoryRequestDTO> {
+    private final ProductMapper productMapper;
+
+    @Override
+    public CategoryEntity requestDTOToExistEntity(CategoryRequestDTO dto, CategoryEntity entity) {
+        return null;
+    }
+
+    @Autowired
+    public CategoryMapper(ProductMapper productMapper) {
+        this.productMapper = productMapper;
+    }
+
     @Override
     public CategoryDTO entityToDTO(CategoryEntity entity) {
-        CategoryDTO dto = new CategoryDTO();
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(entity.getId());
+        categoryDTO.setUpdatedDate(entity.getUpdatedDate());
+        categoryDTO.setCreationDate(entity.getCreationDate());
+        categoryDTO.setName(entity.getName());
+        categoryDTO.setUuid(entity.getUuid());
 
-        dto.setId(entity.getId());
-        dto.setUuid(entity.getUuid());
-        dto.setName(entity.getName());
-        dto.setCreationDate(entity.getCreationDate());
-        dto.setUpdatedDate(entity.getUpdatedDate());
-        dto.setProductList(entity.getProductList());
+        Set<ProductDTO> productDTOS = new HashSet<>(productMapper.entityListToDTOList(new ArrayList<>(entity.getProductList())));
+        categoryDTO.setProductList(productDTOS);
 
-        return dto;
+
+        return categoryDTO;
     }
 
     @Override
     public CategoryEntity dtoToEntity(CategoryDTO dto) {
-        CategoryEntity entity = new CategoryEntity();
 
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        entity.setUuid(dto.getUuid());
-        entity.setCreationDate(dto.getCreationDate());
-        entity.setProductList(dto.getProductList());
-        entity.setUpdatedDate(dto.getUpdatedDate());
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setUuid(dto.getUuid());
+        categoryEntity.setId(dto.getId());
+        categoryEntity.setUpdatedDate(dto.getUpdatedDate());
+        categoryEntity.setCreationDate(dto.getCreationDate());
+        categoryEntity.setName(dto.getName());
+        categoryEntity.setUuid(dto.getUuid());
 
-        return entity;
+        Set<ProductEntity> productDTOS = new HashSet<>(productMapper.dtoListTOEntityList(new ArrayList<>(dto.getProductList())));
+        categoryEntity.setProductList(productDTOS);
+
+
+
+
+        return categoryEntity;
     }
 
     @Override
     public List<CategoryDTO> entityListToDTOList(List<CategoryEntity> categoryEntities) {
-
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
-        for (CategoryEntity categoryEntity : categoryEntities) {
-            categoryDTOList.add(entityToDTO(categoryEntity));
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        for (CategoryEntity entity : categoryEntities) {
+            categoryDTOS.add(entityToDTO(entity));
         }
-        return categoryDTOList;
+        return categoryDTOS;
     }
 
     @Override
     public List<CategoryEntity> dtoListTOEntityList(List<CategoryDTO> categoryDTOS) {
-
-        List<CategoryEntity> categoryEntityList = new ArrayList<>();
+        List<CategoryEntity> categoryEntities = new ArrayList<>();
         for (CategoryDTO categoryDTO : categoryDTOS) {
-            categoryEntityList.add(dtoToEntity(categoryDTO));
+            categoryEntities.add(dtoToEntity(categoryDTO));
         }
-        return categoryEntityList;
+        return categoryEntities;
     }
 
     @Override
     public CategoryEntity requestDTOToEntity(CategoryRequestDTO dto) {
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setName(categoryEntity.getName());
+        categoryEntity.setUuid(categoryEntity.getUuid());
+        categoryEntity.setUpdatedDate(categoryEntity.getUpdatedDate());
+        categoryEntity.setCreationDate(categoryEntity.getCreationDate());
+        categoryEntity.setId(categoryEntity.getId());
 
-        CategoryEntity entity = new CategoryEntity();
+        Set<ProductEntity> productDTOS = new HashSet<>(productMapper.requestDTOListTOEntityList(new ArrayList<>(dto.getProductList())));
+        categoryEntity.setProductList(productDTOS);
 
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        entity.setUuid(dto.getUuid());
-        entity.setCreationDate(dto.getCreationDate());
-        entity.setProductList(dto.getProductList());
-        entity.setUpdatedDate(dto.getUpdatedDate());
+        return categoryEntity;
+    }
 
-        return entity;
+    @Override
+    public List<CategoryEntity> requestDTOListTOEntityList(List<CategoryRequestDTO> categoryRequestDTOS) {
+        return null;
     }
 }
